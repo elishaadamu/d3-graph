@@ -1,6 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 /* Base styles */
@@ -10,27 +11,32 @@ body {
   font-family: "Helvetica Neue", Helvetica;
   margin: 0;
   padding: 0;
+  overflow-x: auto;
 }
 
 #body {
   margin: 0 auto;
   position: relative;
+  width: 100%;
+  overflow-x: auto;
 }
 
 #header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 20px 20px;
   position: relative;
+  flex-wrap: wrap;
 }
 
 #header {
-  font-size: 40px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
-  color: #007bff;
+  color: black;
   flex: 1;
+  min-width: 250px;
 }
 
 .dark-mode-toggle {
@@ -45,7 +51,8 @@ body {
   justify-content: center;
   transition: all 0.3s ease;
   position: absolute;
-  right: 40px;
+  right: 20px;
+  top: 20px;
 }
 
 .dark-mode-toggle:hover {
@@ -132,7 +139,7 @@ path.link {
 }
 
 .dark-Mode #header {
-  color: #007bff;
+  color: #fff;
 }
 
 .dark-Mode .dark-mode-toggle {
@@ -171,4 +178,74 @@ path.link {
 
 .dark-Mode path.link {
   stroke: #444;
+}
+
+.dark-Mode .level-title {
+  fill: #fff !important;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+  #header {
+    font-size: 21px;
+    margin-bottom: 10px;
+  }
+
+  #header-container {
+    padding: 15px 10px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dark-mode-toggle {
+    position: static;
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .toggle-icon {
+    font-size: 20px;
+  }
+
+  #body {
+    padding: 0 5px;
+  }
+
+  .node text {
+    font-size: 10px;
+  }
+
+  .level-title {
+    font-size: 10px !important;
+  }
+}
+
+/* Tablet Responsiveness */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #header {
+    font-size: 24px;
+  }
+
+  #header-container {
+    padding: 20px 15px;
+  }
+
+  .dark-mode-toggle {
+    right: 15px;
+  }
+
+  .node text {
+    font-size: 11px;
+  }
+
+  .level-title {
+    font-size: 12px !important;
+  }
+}
+
+/* Ensure SVG is responsive */
+svg {
+  max-width: 100%;
+  height: auto;
 }

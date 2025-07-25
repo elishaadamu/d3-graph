@@ -10,7 +10,9 @@ function App() {
   return (
     <div id="body">
       <div id="header-container">
-        <div id="header">Minimal Design</div>
+        <div id="header">
+          Vision, Goals, Objectives, and Performance Measures
+        </div>
 
         <button className="dark-mode-toggle" onClick={toggleDarkMode}>
           <span className="toggle-icon">🌓</span>
@@ -18,17 +20,6 @@ function App() {
       </div>
       <hr />
       <OsintTree />
-      <footer id="footer">
-        <div className="footer-content">
-          <p>
-            &copy; 2025 Minimal Design. Open Source Intelligence Tools &
-            Resources.
-          </p>
-          <p>
-            <span>Built with React & D3.js</span>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
