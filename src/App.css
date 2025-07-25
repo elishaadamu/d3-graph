@@ -1,0 +1,175 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Base styles */
+body {
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica;
+  margin: 0;
+  padding: 0;
+}
+
+#body {
+  margin: 0 auto;
+  position: relative;
+}
+
+#header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  position: relative;
+}
+
+#header {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  color: #007bff;
+  flex: 1;
+}
+
+.dark-mode-toggle {
+  background: transparent;
+  border: 2px solid #333;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: absolute;
+  right: 40px;
+}
+
+.dark-mode-toggle:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.toggle-icon {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.dark-mode-toggle:hover .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.legend {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  width: 330px;
+  font-size: 11px;
+  color: #000;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 12px;
+  fill: rgb(0, 0, 0);
+}
+
+path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1px;
+}
+
+/* FOOTER */
+#footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  padding: 20px 0;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-content a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* DARK MODE */
+.dark-Mode {
+  background-color: #000;
+  color: #fff;
+}
+
+.dark-Mode #header {
+  color: #007bff;
+}
+
+.dark-Mode .dark-mode-toggle {
+  border-color: #fff;
+  color: #fff;
+}
+
+.dark-Mode .dark-mode-toggle:hover {
+  background-color: #333;
+}
+
+.dark-Mode #footer {
+  background-color: #1a1a1a;
+  border-top-color: #333;
+}
+
+.dark-Mode .footer-content p {
+  color: #ccc;
+}
+
+.dark-Mode .footer-content a {
+  color: #66b3ff;
+}
+
+.dark-Mode .footer-content a:hover {
+  color: #99ccff;
+}
+
+.dark-Mode .node text {
+  fill: #fff;
+}
+
+.dark-Mode .legend {
+  color: #fff;
+}
+
+.dark-Mode path.link {
+  stroke: #444;
+}
