@@ -11,10 +11,12 @@ function App() {
     <div id="body">
       <div id="header-container">
         <div id="header">Minimal Design</div>
+
         <button className="dark-mode-toggle" onClick={toggleDarkMode}>
           <span className="toggle-icon">🌓</span>
         </button>
       </div>
+      <hr />
       <OsintTree />
       <footer id="footer">
         <div className="footer-content">
