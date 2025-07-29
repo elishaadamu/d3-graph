@@ -345,21 +345,34 @@ const OsintTree = () => {
         <button
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
           style={{
-            backgroundColor: "#f3f4f6",
+            backgroundColor: isAccordionOpen ? "#e5e7eb" : "#f3f4f6",
             border: "1px solid #d1d5db",
-            borderRadius: "6px",
-            padding: "8px 12px",
+            borderRadius: isAccordionOpen ? "6px 6px 0 0" : "6px",
+            padding: "10px 14px",
             fontSize: dimensions.width < 768 ? "11px" : "12px",
-            fontWeight: "500",
+            fontWeight: "600",
             color: "#374151",
             cursor: "pointer",
-            width: "100%", // Changed back to 53%
+            width: "100%",
             textAlign: "left",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             transition: "all 0.2s ease-in-out",
-            marginBottom: "10px",
+            boxShadow: isAccordionOpen
+              ? "0 2px 4px rgba(0, 0, 0, 0.1)"
+              : "0 1px 2px rgba(0, 0, 0, 0.05)",
+            outline: "none",
+          }}
+          onMouseEnter={(e) => {
+            if (!isAccordionOpen) {
+              e.target.style.backgroundColor = "#e5e7eb";
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isAccordionOpen) {
+              e.target.style.backgroundColor = "#f3f4f6";
+            }
           }}
         >
           <span>Vision Statement</span>
@@ -367,6 +380,8 @@ const OsintTree = () => {
             style={{
               transform: isAccordionOpen ? "rotate(180deg)" : "rotate(0deg)",
               transition: "transform 0.3s ease-in-out",
+              fontSize: "10px",
+              color: "#6b7280",
             }}
           >
             ▼
@@ -374,29 +389,56 @@ const OsintTree = () => {
         </button>
         <div
           style={{
-            maxHeight: isAccordionOpen ? "150px" : "0",
+            maxHeight: isAccordionOpen ? "160px" : "0",
             overflow: isAccordionOpen ? "auto" : "hidden",
-            transition: "max-height 0.3s ease-in-out",
+            transition:
+              "max-height 0.3s ease-in-out, box-shadow 0.2s ease-in-out",
             border: isAccordionOpen ? "1px solid #d1d5db" : "none",
             borderTop: "none",
             borderRadius: "0 0 6px 6px",
             backgroundColor: "#f9fafb",
+            boxShadow: isAccordionOpen
+              ? "0 4px 6px rgba(0, 0, 0, 0.1)"
+              : "none",
+            // Custom scrollbar styles
+            scrollbarWidth: "thin",
+            scrollbarColor: "#cbd5e1 #f1f5f9",
           }}
+          className="custom-scrollbar"
         >
+          <style jsx>{`
+            .custom-scrollbar::-webkit-scrollbar {
+              width: 6px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+              background: #f1f5f9;
+              border-radius: 3px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+              background: #cbd5e1;
+              border-radius: 3px;
+              transition: background 0.2s ease;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+              background: #94a3b8;
+            }
+          `}</style>
           <p
             className="footer-text"
             style={{
               margin: "0",
-              padding: "12px",
+              padding: "14px 16px",
               fontSize: dimensions.width < 768 ? "10px" : "12px",
-              color: "#666",
-              width: "80%",
-              lineHeight: "1.4",
+              color: "#4b5563",
+              lineHeight: "1.5",
               wordWrap: "break-word",
-              overflowWrap: "break-word", // Added this
-              hyphens: "auto", // Added this
+              overflowWrap: "break-word",
+              hyphens: "auto",
+              width: "100%",
               boxSizing: "border-box",
-              overflowX: "hidden", // Added this to prevent horizontal scroll
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              letterSpacing: "0.025em",
             }}
           >
             An integrated network, cost effective, multimodal transportation
