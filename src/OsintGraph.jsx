@@ -116,13 +116,7 @@ const OsintTree = () => {
     root.x0 = height / 2;
     root.y0 = 0;
 
-    // Collapse all children initially
-    root.children?.forEach(collapse);
-
-    const treeLayout = d3.tree().size([height, width]);
-
-    update(root);
-
+    // Define collapse function first
     function collapse(d) {
       if (d.children) {
         d._children = d.children;
@@ -130,6 +124,20 @@ const OsintTree = () => {
         d.children = null;
       }
     }
+
+    // Initially collapse ALL children of the root (Vision)
+    // so only the Vision node circle is visible when page loads
+    if (root.children) {
+      root.children.forEach(collapse);
+      // Hide the children completely on initial load
+      root._children = root.children;
+      root.children = null;
+    }
+
+    const treeLayout = d3.tree().size([height, width]);
+
+    // Now call update with the collapsed tree
+    update(root);
 
     function update(source) {
       const duration = 750;
@@ -149,7 +157,7 @@ const OsintTree = () => {
         .enter()
         .append("g")
         .attr("class", "node")
-        .attr("transform", () => `translate(${source.y0},${source.x0})`)
+        .attr("transform", (d) => `translate(${source.y0},${source.x0})`)
         .on("click", (event, d) => {
           toggle(d);
           update(d);
