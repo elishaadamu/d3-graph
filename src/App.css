@@ -44,6 +44,7 @@ body {
   color: black;
   width: 50%;
   margin-top: 0;
+  margin: auto;
 }
 
 .dark-mode-toggle {
