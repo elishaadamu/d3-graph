@@ -326,8 +326,6 @@ const OsintTree = () => {
     }
   }, [dimensions]);
 
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <svg ref={svgRef} style={{ width: "100%", height: "100%" }}></svg>
@@ -337,117 +335,48 @@ const OsintTree = () => {
           top: `${
             dimensions.height / 2 + (dimensions.width < 768 ? 60 : 80)
           }px`, // Vision circle center + small offset
-          left: `${dimensions.width < 768 ? 40 : 200}px`, // Same as Vision circle's left margin
-          transform: "translateX(-50%)", // Center the accordion under the circle
-          maxWidth: dimensions.width < 768 ? "106px" : "148px", // Reduced to 53% of original (200px * 0.53 = 106px, 280px * 0.53 = 148px)
+          left: `${dimensions.width < 768 ? 40 : 150}px`, // Same as Vision circle's left margin
+          transform: "translateX(-50%)", // Center the text under the circle
+          maxWidth: dimensions.width < 768 ? "200px" : "220px", // Reasonable width for readability
+          backgroundColor: "#f9fafb",
+          border: "1px solid #d1d5db",
+          borderRadius: "6px",
+          padding: "14px 16px",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <button
-          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+        <h4
           style={{
-            backgroundColor: isAccordionOpen ? "#e5e7eb" : "#f3f4f6",
-            border: "1px solid #d1d5db",
-            borderRadius: isAccordionOpen ? "6px 6px 0 0" : "6px",
-            padding: "10px 14px",
+            margin: "0 0 8px 0",
             fontSize: dimensions.width < 768 ? "11px" : "12px",
             fontWeight: "600",
             color: "#374151",
-            cursor: "pointer",
-            width: "100%",
-            textAlign: "left",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            transition: "all 0.2s ease-in-out",
-            boxShadow: isAccordionOpen
-              ? "0 2px 4px rgba(0, 0, 0, 0.1)"
-              : "0 1px 2px rgba(0, 0, 0, 0.05)",
-            outline: "none",
-          }}
-          onMouseEnter={(e) => {
-            if (!isAccordionOpen) {
-              e.target.style.backgroundColor = "#e5e7eb";
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!isAccordionOpen) {
-              e.target.style.backgroundColor = "#f3f4f6";
-            }
+            fontFamily:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           }}
         >
-          <span>Vision Statement</span>
-          <span
-            style={{
-              transform: isAccordionOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s ease-in-out",
-              fontSize: "10px",
-              color: "#6b7280",
-            }}
-          >
-            ▼
-          </span>
-        </button>
-        <div
+          Vision Statement
+        </h4>
+        <p
           style={{
-            maxHeight: isAccordionOpen ? "160px" : "0",
-            overflow: isAccordionOpen ? "auto" : "hidden",
-            transition:
-              "max-height 0.3s ease-in-out, box-shadow 0.2s ease-in-out",
-            border: isAccordionOpen ? "1px solid #d1d5db" : "none",
-            borderTop: "none",
-            borderRadius: "0 0 6px 6px",
-            backgroundColor: "#f9fafb",
-            boxShadow: isAccordionOpen
-              ? "0 4px 6px rgba(0, 0, 0, 0.1)"
-              : "none",
-            // Custom scrollbar styles
-            scrollbarWidth: "thin",
-            scrollbarColor: "#cbd5e1 #f1f5f9",
+            margin: "0",
+            fontSize: dimensions.width < 768 ? "10px" : "11px",
+            color: "#4b5563",
+            lineHeight: "1.5",
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+            hyphens: "auto",
+            fontFamily:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            letterSpacing: "0.025em",
           }}
-          className="custom-scrollbar"
         >
-          <style jsx>{`
-            .custom-scrollbar::-webkit-scrollbar {
-              width: 6px;
-            }
-            .custom-scrollbar::-webkit-scrollbar-track {
-              background: #f1f5f9;
-              border-radius: 3px;
-            }
-            .custom-scrollbar::-webkit-scrollbar-thumb {
-              background: #cbd5e1;
-              border-radius: 3px;
-              transition: background 0.2s ease;
-            }
-            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-              background: #94a3b8;
-            }
-          `}</style>
-          <p
-            className="footer-text"
-            style={{
-              margin: "0",
-              padding: "14px 16px",
-              fontSize: dimensions.width < 768 ? "10px" : "12px",
-              color: "#4b5563",
-              lineHeight: "1.5",
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              hyphens: "auto",
-              width: "100%",
-              boxSizing: "border-box",
-              fontFamily:
-                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-              letterSpacing: "0.025em",
-            }}
-          >
-            An integrated network, cost effective, multimodal transportation
-            system that safely and efficiently moves people and goods throughout
-            the region in an equitable and environmentally responsible manner to
-            support economic prosperity and improved quality of life for all
-            users.
-          </p>
-        </div>
+          An integrated network, cost effective, multimodal transportation
+          system that safely and efficiently moves people and goods throughout
+          the region in an equitable and environmentally responsible manner to
+          support economic prosperity and improved quality of life for all
+          users.
+        </p>
       </div>
     </div>
   );
