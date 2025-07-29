@@ -18,14 +18,6 @@ function App() {
       </div>
       <hr />
       <OsintTree />
-
-      <p className="footer-text">
-        {" "}
-        An integrated network, cost effective, multimodal transportation system
-        that safely and efficiently moves people and goods throughout the region
-        in an equitable and environmentally responsible manner to support
-        economic prosperity and improved quality of life for all users.
-      </p>
     </div>
   );
 }

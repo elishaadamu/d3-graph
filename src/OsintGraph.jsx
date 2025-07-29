@@ -326,7 +326,89 @@ const OsintTree = () => {
     }
   }, [dimensions]);
 
-  return <svg ref={svgRef} style={{ width: "100%", height: "100%" }}></svg>;
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
+  return (
+    <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      <svg ref={svgRef} style={{ width: "100%", height: "100%" }}></svg>
+      <div
+        style={{
+          position: "absolute",
+          top: `${
+            dimensions.height / 2 + (dimensions.width < 768 ? 60 : 80)
+          }px`, // Vision circle center + small offset
+          left: `${dimensions.width < 768 ? 40 : 200}px`, // Same as Vision circle's left margin
+          transform: "translateX(-50%)", // Center the accordion under the circle
+          maxWidth: dimensions.width < 768 ? "106px" : "148px", // Reduced to 53% of original (200px * 0.53 = 106px, 280px * 0.53 = 148px)
+        }}
+      >
+        <button
+          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+          style={{
+            backgroundColor: "#f3f4f6",
+            border: "1px solid #d1d5db",
+            borderRadius: "6px",
+            padding: "8px 12px",
+            fontSize: dimensions.width < 768 ? "11px" : "12px",
+            fontWeight: "500",
+            color: "#374151",
+            cursor: "pointer",
+            width: "100%", // Changed back to 53%
+            textAlign: "left",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            transition: "all 0.2s ease-in-out",
+            marginBottom: "10px",
+          }}
+        >
+          <span>Vision Statement</span>
+          <span
+            style={{
+              transform: isAccordionOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s ease-in-out",
+            }}
+          >
+            ▼
+          </span>
+        </button>
+        <div
+          style={{
+            maxHeight: isAccordionOpen ? "150px" : "0",
+            overflow: isAccordionOpen ? "auto" : "hidden",
+            transition: "max-height 0.3s ease-in-out",
+            border: isAccordionOpen ? "1px solid #d1d5db" : "none",
+            borderTop: "none",
+            borderRadius: "0 0 6px 6px",
+            backgroundColor: "#f9fafb",
+          }}
+        >
+          <p
+            className="footer-text"
+            style={{
+              margin: "0",
+              padding: "12px",
+              fontSize: dimensions.width < 768 ? "10px" : "12px",
+              color: "#666",
+              width: "80%",
+              lineHeight: "1.4",
+              wordWrap: "break-word",
+              overflowWrap: "break-word", // Added this
+              hyphens: "auto", // Added this
+              boxSizing: "border-box",
+              overflowX: "hidden", // Added this to prevent horizontal scroll
+            }}
+          >
+            An integrated network, cost effective, multimodal transportation
+            system that safely and efficiently moves people and goods throughout
+            the region in an equitable and environmentally responsible manner to
+            support economic prosperity and improved quality of life for all
+            users.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default OsintTree;
