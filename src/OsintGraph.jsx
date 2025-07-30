@@ -5,6 +5,7 @@ import data from "./data.json"; // Your JSON file
 const OsintTree = () => {
   const svgRef = useRef();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [isTreeExpanded, setIsTreeExpanded] = useState(false); // Add this state
 
   useEffect(() => {
     // Add CSS for instant tooltips
@@ -319,9 +320,17 @@ const OsintTree = () => {
       if (d.children) {
         d._children = d.children;
         d.children = null;
+        // If collapsing the root node (Vision), hide the tree
+        if (d.depth === 0) {
+          setIsTreeExpanded(false);
+        }
       } else {
         d.children = d._children;
         d._children = null;
+        // If expanding the root node (Vision), show the tree
+        if (d.depth === 0) {
+          setIsTreeExpanded(true);
+        }
       }
     }
   }, [dimensions]);
@@ -329,57 +338,60 @@ const OsintTree = () => {
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <svg ref={svgRef} style={{ width: "100%", height: "100%" }}></svg>
-      <div
-        style={{
-          position: "absolute",
-          top: `${
-            dimensions.height / 2 + (dimensions.width < 768 ? 60 : 80)
-          }px`, // Vision circle center + small offset
-          left: `${dimensions.width < 768 ? 40 : 150}px`, // Same as Vision circle's left margin
-          transform: "translateX(-50%)", // Center the text under the circle
-          maxWidth: dimensions.width < 768 ? "200px" : "220px", // Reasonable width for readability
-          backgroundColor: "#ffffff",
-          border: "1px solid #e5e7eb",
-          borderRadius: "8px",
-          padding: "16px 18px",
-          boxShadow:
-            "0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
-          background: "linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)",
-        }}
-      >
-        <h4
+      {/* Only show vision statement when tree is not expanded */}
+      {!isTreeExpanded && (
+        <div
           style={{
-            margin: "0 0 8px 0",
-            fontSize: dimensions.width < 768 ? "11px" : "12px",
-            fontWeight: "600",
-            color: "#374151",
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            position: "absolute",
+            top: `${
+              dimensions.height / 2 + (dimensions.width < 768 ? 60 : 80)
+            }px`, // Vision circle center + small offset
+            left: `${dimensions.width < 768 ? 40 : 150}px`, // Same as Vision circle's left margin
+            transform: "translateX(-50%)", // Center the text under the circle
+            maxWidth: dimensions.width < 768 ? "200px" : "220px", // Reasonable width for readability
+            backgroundColor: "#ffffff",
+            border: "1px solid #e5e7eb",
+            borderRadius: "8px",
+            padding: "16px 18px",
+            boxShadow:
+              "0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+            background: "linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)",
           }}
         >
-          Vision Statement
-        </h4>
-        <p
-          style={{
-            margin: "0",
-            fontSize: dimensions.width < 768 ? "10px" : "11px",
-            color: "#4b5563",
-            lineHeight: "1.5",
-            wordWrap: "break-word",
-            overflowWrap: "break-word",
-            hyphens: "auto",
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-            letterSpacing: "0.025em",
-          }}
-        >
-          An integrated network, cost effective, multimodal transportation
-          system that safely and efficiently moves people and goods throughout
-          the region in an equitable and environmentally responsible manner to
-          support economic prosperity and improved quality of life for all
-          users.
-        </p>
-      </div>
+          <h4
+            style={{
+              margin: "0 0 8px 0",
+              fontSize: dimensions.width < 768 ? "11px" : "12px",
+              fontWeight: "600",
+              color: "#374151",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            }}
+          >
+            Vision Statement
+          </h4>
+          <p
+            style={{
+              margin: "0",
+              fontSize: dimensions.width < 768 ? "10px" : "11px",
+              color: "#4b5563",
+              lineHeight: "1.5",
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              hyphens: "auto",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              letterSpacing: "0.025em",
+            }}
+          >
+            An integrated network, cost effective, multimodal transportation
+            system that safely and efficiently moves people and goods throughout
+            the region in an equitable and environmentally responsible manner to
+            support economic prosperity and improved quality of life for all
+            users.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
