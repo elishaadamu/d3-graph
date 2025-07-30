@@ -338,11 +338,13 @@ const OsintTree = () => {
           left: `${dimensions.width < 768 ? 40 : 150}px`, // Same as Vision circle's left margin
           transform: "translateX(-50%)", // Center the text under the circle
           maxWidth: dimensions.width < 768 ? "200px" : "220px", // Reasonable width for readability
-          backgroundColor: "#f9fafb",
-          border: "1px solid #d1d5db",
-          borderRadius: "6px",
-          padding: "14px 16px",
-          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#ffffff",
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px",
+          padding: "16px 18px",
+          boxShadow:
+            "0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+          background: "linear-gradient(145deg, #ffffff 0%, #f8fafc 100%)",
         }}
       >
         <h4
