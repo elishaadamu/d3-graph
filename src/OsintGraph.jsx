@@ -317,19 +317,23 @@ const OsintTree = () => {
     }
 
     function toggle(d) {
+      console.log("Toggle called for node:", d.data.name, "depth:", d.depth); // Debug line
       if (d.children) {
         d._children = d.children;
         d.children = null;
-        // If collapsing the root node (Vision), hide the tree
+        // Only hide vision statement when collapsing the root node (Vision)
         if (d.depth === 0) {
+          console.log("Hiding vision statement - root collapsed"); // Debug line
           setIsTreeExpanded(false);
         }
       } else {
         d.children = d._children;
         d._children = null;
-        // If expanding the root node (Vision), show the tree
+        // Do NOT hide vision statement when expanding the root node
+        // Vision statement should remain visible when tree is expanded
         if (d.depth === 0) {
-          setIsTreeExpanded(true);
+          console.log("Root expanded but keeping vision statement visible"); // Debug line
+          // Remove this line: setIsTreeExpanded(true);
         }
       }
     }
@@ -338,17 +342,17 @@ const OsintTree = () => {
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <svg ref={svgRef} style={{ width: "100%", height: "100%" }}></svg>
-      {/* Only show vision statement when tree is not expanded */}
+      {/* Only show vision statement when root Vision node is not expanded */}
       {!isTreeExpanded && (
         <div
           style={{
             position: "absolute",
             top: `${
-              dimensions.height / 2 + (dimensions.width < 768 ? 60 : 80)
-            }px`, // Vision circle center + small offset
-            left: `${dimensions.width < 768 ? 40 : 150}px`, // Same as Vision circle's left margin
-            transform: "translateX(-50%)", // Center the text under the circle
-            maxWidth: dimensions.width < 768 ? "200px" : "220px", // Reasonable width for readability
+              dimensions.height / 2 + (dimensions.width < 768 ? 60 : -250)
+            }px`, // Keep -250 for desktop
+            left: `${dimensions.width < 768 ? 40 : 150}px`,
+            transform: "translateX(-50%)",
+            maxWidth: dimensions.width < 768 ? "200px" : "220px",
             backgroundColor: "#ffffff",
             border: "1px solid #e5e7eb",
             borderRadius: "8px",
@@ -363,12 +367,12 @@ const OsintTree = () => {
               margin: "0 0 8px 0",
               fontSize: dimensions.width < 768 ? "11px" : "12px",
               fontWeight: "600",
-              color: "#374151",
+              color: "#e11d48",
               fontFamily:
                 "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
             }}
           >
-            Vision Statement
+            🎯 Vision Statement
           </h4>
           <p
             style={{
