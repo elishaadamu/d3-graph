@@ -1,155 +1,68 @@
 {
   "name": "Vision",
-  "type": "folder",
+  "type": "category",
   "children": [
     {
       "name": "Economic Development",
-      "type": "folder",
+      "type": "category",
       "children": [
         {
-          "name": "Improve connectivity and mobility",
-          "type": "folder",
-          "children": [
-            {
-              "name": "Sub Goal 1.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 1.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 1.3",
-              "type": "folder",
-              "children": []
-            }
-          ]
-        },
-        {
           "name": "Reduce peak period travel times",
-          "type": "folder",
+          "type": "category",
           "children": [
             {
-              "name": "Sub Goal 2.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 2.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 2.3",
-              "type": "folder",
-              "children": []
+              "name": "Average travel time during AM and PM peak periods on major corridors",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Increase transportation investment",
-          "type": "folder",
+          "name": "Increase transportation investment which focuses on economic vitality",
+          "type": "category",
           "children": [
             {
-              "name": "Sub Goal 4.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 4.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 4.3",
-              "type": "folder",
-              "children": []
+              "name": "Change in employment or economic output in areas with new or improved transportation facilities",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Improve reliability",
-          "type": "folder",
+          "name": "Improve reliability of travel to regional activity centers",
+          "type": "category",
           "children": [
             {
-              "name": "Sub Goal 4.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 4.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 4.3",
-              "type": "folder",
-              "children": []
+              "name": "Planning Time Index (95th percentile travel time / free flow travel time) to/from activity centers",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Increase multimodal access",
-          "type": "folder",
+          "name": "Increase multimodal access to regional activity centers",
+          "type": "category",
           "children": [
             {
-              "name": "Sub Goal 5.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 5.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 5.3",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of population within ½ mile of transit routes serving activity centers",
+              "type": "measure"
             }
           ]
         },
         {
           "name": "Reduce freight bottlenecks",
-          "type": "folder",
+          "type": "category",
           "children": [
             {
-              "name": "Sub Goal 6.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 6.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 6.3",
-              "type": "folder",
-              "children": []
+              "name": "Average truck travel time index (TTTI) on freight-priority corridors",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Expand and maintain a active travel network",
-          "type": "folder",
+          "name": "Expand and maintain a regional network of sidewalks, bike lanes, and multi-use trails",
+          "type": "category",
           "children": [
             {
-              "name": "Sub Goal 7.1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 7.2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Sub Goal 7.3",
-              "type": "folder",
-              "children": []
+              "name": "Total miles of sidewalks, bike lanes, and multi-use trails regionwide",
+              "type": "measure"
             }
           ]
         }
@@ -157,68 +70,29 @@
     },
     {
       "name": "Equity/Accessibility",
-      "type": "folder",
+      "type": "category",
       "children": [
         {
-          "name": "Improve equitable access",
-          "type": "folder",
+          "name": "Reduce trip length for all people with a focus on Environmental Justice populations",
+          "type": "category",
           "children": [
             {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Average trip length (in miles) by mode and population type (e.g., EJ vs. non-EJ)",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Reduce trip lengths",
-          "type": "folder",
+          "name": "Increase access to jobs and community services via transit, walking, and biking",
+          "type": "category",
           "children": [
             {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of EJ population within a ½-mile walk of frequent transit service",
+              "type": "measure"
             },
             {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
-            }
-          ]
-        },
-        {
-          "name": "Increase access to jobs and community services",
-          "type": "folder",
-          "children": [
-            {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Number of jobs accessible within 30 minutes by transit, walking, or biking, disaggregated by EJ vs. non-EJ populations",
+              "type": "measure"
             }
           ]
         }
@@ -226,68 +100,37 @@
     },
     {
       "name": "Safety",
-      "type": "folder",
+      "type": "category",
       "children": [
         {
-          "name": "Improve the safety",
-          "type": "folder",
+          "name": "Reduce the number and rate of motorized fatalities and serious injuries",
+          "type": "category",
           "children": [
             {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Total number of motor vehicle fatalities (annual)",
+              "type": "measure"
             },
             {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
+              "name": "Total number of serious injuries resulting from motor vehicle crashes",
+              "type": "measure"
             },
             {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
-            }
-          ]
-        },
-        {
-          "name": "Reduce the number and rate of fatalities and serious injuries",
-          "type": "folder",
-          "children": [
-            {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Fatality rate per 100 million VMT (Vehicle Miles Traveled)",
+              "type": "measure"
             },
             {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Serious injury rate per 100 million VMT",
+              "type": "measure"
             }
           ]
         },
         {
           "name": "Reduce the number of non-motorized fatalities and serious injuries",
-          "type": "folder",
+          "type": "category",
           "children": [
             {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Non-motorized fatality and serious injury rate per capita or per 100,000 population",
+              "type": "measure"
             }
           ]
         }
@@ -295,89 +138,51 @@
     },
     {
       "name": "System Management",
-      "type": "folder",
+      "type": "category",
       "children": [
         {
-          "name": "Ensure system of good repair",
-          "type": "folder",
-          "children": [
-            {
-              "name": "Group 1 Item 1",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 1 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 1 Item 3",
-              "type": "folder",
-              "children": []
-            }
-          ]
-        },
-        {
           "name": "Improve the condition of all bridges",
-          "type": "folder",
+          "type": "category",
           "children": [
             {
-              "name": "Group 2 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of NHS bridges (by deck area) in good condition",
+              "type": "measure"
             },
             {
-              "name": "Group 2 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 2 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of NHS bridges (by deck area) in poor condition",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Improve pavements condition",
-          "type": "folder",
+          "name": "Improve the lane miles of pavements in good and poor condition",
+          "type": "category",
           "children": [
             {
-              "name": "Group 3 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of Interstate lane miles in good condition",
+              "type": "measure"
             },
             {
-              "name": "Group 3 Item 2",
-              "type": "folder",
-              "children": []
-            },
-            {
-              "name": "Group 3 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of Interstate lane miles in poor condition",
+              "type": "measure"
             }
           ]
         },
         {
-          "name": "Improve transit vehicles and facilities",
-          "type": "folder",
+          "name": "Improve percent of transit vehicles and facilities in good and poor condition",
+          "type": "category",
           "children": [
             {
-              "name": "Group 4 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of transit revenue vehicles that exceed useful life benchmark (ULB)",
+              "type": "measure"
             },
             {
-              "name": "Group 4 Item 2",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of non-revenue vehicles exceeding ULB",
+              "type": "measure"
             },
             {
-              "name": "Group 4 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Percentage of facilities rated below 3.0 on FTA's TERM scale (Transit Economic Requirements Model)",
+              "type": "measure"
             }
           ]
         }
@@ -385,26 +190,29 @@
     },
     {
       "name": "Environment",
-      "type": "folder",
+      "type": "category",
       "children": [
         {
-          "name": "Reduce environmental impacts of transportation",
-          "type": "folder",
+          "name": "Reduce transportation-related pollutants",
+          "type": "category",
           "children": [
             {
-              "name": "Group 1 Item 1",
-              "type": "folder",
-              "children": []
+              "name": "Total tons of transportation-related emissions per year (e.g., CO₂, NOₓ, VOCs, PM2.5)",
+              "type": "measure"
             },
             {
-              "name": "Group 1 Item 2",
-              "type": "folder",
-              "children": []
-            },
+              "name": "Emissions per capita or per vehicle mile traveled (VMT)",
+              "type": "measure"
+            }
+          ]
+        },
+        {
+          "name": "Reduce impact of plan on environmentally sensitive areas",
+          "type": "category",
+          "children": [
             {
-              "name": "Group 1 Item 3",
-              "type": "folder",
-              "children": []
+              "name": "Acres of environmentally sensitive land directly impacted by funded or programmed transportation projects",
+              "type": "measure"
             }
           ]
         }
