@@ -3,46 +3,27 @@ import * as d3 from "d3";
 import data from "./data.json"; // Your JSON file
 
 const OsintTree = () => {
-  const svgRef = useRef();
+  const svgRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [isTreeExpanded, setIsTreeExpanded] = useState(false); // Add this state
+  const [isTreeExpanded, setIsTreeExpanded] = useState(false);
 
-  useEffect(() => {
-    // Add CSS for instant tooltips
-    const style = document.createElement("style");
-    style.textContent = `
-      svg title {
-        pointer-events: none;
-      }
-      .node:hover title {
-        display: block;
-        transition: none !important;
-        animation: none !important;
-      }
-    `;
-    document.head.appendChild(style);
+  // === LINK OPTIONS ===
+  const LINK_MODE = "curved"; // "curved" | "straight"
+  const CURVE_TENSION = 0.75; // 0.0..1.0 (higher => flatter curve)
 
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
+  // measure container
   useEffect(() => {
     const updateDimensions = () => {
       const container = svgRef.current?.parentElement;
       if (container) {
         const isMobile = window.innerWidth < 768;
-
-        // Set minimum width to 1280px for desktop, keep responsive for mobile
         const containerWidth = isMobile
           ? container.clientWidth
           : Math.max(1280, container.clientWidth);
-
         const containerHeight = Math.max(600, window.innerHeight - 200);
         setDimensions({ width: containerWidth, height: containerHeight });
       }
     };
-
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
@@ -51,26 +32,27 @@ const OsintTree = () => {
   useEffect(() => {
     if (dimensions.width === 0) return;
 
-    // Responsive margins and spacing
+    // responsive flags
     const isMobile = dimensions.width < 768;
     const isTablet = dimensions.width >= 768 && dimensions.width < 1024;
 
+    // margins
     const margin = {
       top: isMobile ? 80 : 60,
-      right: isMobile ? 20 : 200,
+      right: isMobile ? 20 : 220,
       bottom: 20,
-      left: isMobile ? 20 : 200,
+      left: isMobile ? 20 : 220,
     };
 
     const width = dimensions.width - margin.left - margin.right;
     const height = dimensions.height - margin.top - margin.bottom;
 
-    // Responsive node spacing
-    const nodeSpacing = isMobile ? 120 : isTablet ? 180 : 250;
+    // horizontal spacing
+    const nodeSpacing = isMobile ? 180 : isTablet ? 260 : 380;
 
     let i = 0;
 
-    // Clear any existing content
+    // clear
     d3.select(svgRef.current).selectAll("*").remove();
 
     const svg = d3
@@ -82,24 +64,16 @@ const OsintTree = () => {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Add level titles with responsive positioning
+    // Level titles
     const levelTitles = [
       "Vision",
       "Goals",
       "Objectives",
       "Performance Measures",
     ];
-
-    // Define colors for each level
-    const levelColors = [
-      "#e11d48", // Vision - Red
-      "#059669", // Goals - Green
-      "#2563eb", // Objectives - Blue
-      "#7c3aed", // Performance Measures - Purple
-    ];
+    const levelColors = ["#e11d48", "#059669", "#2563eb", "#7c3aed"];
 
     const titleGroup = svg.append("g").attr("class", "level-titles");
-
     levelTitles.forEach((title, index) => {
       titleGroup
         .append("text")
@@ -113,11 +87,11 @@ const OsintTree = () => {
         .text(title);
     });
 
+    // data & collapse
     const root = d3.hierarchy(data);
     root.x0 = height / 2;
     root.y0 = 0;
 
-    // Define collapse function first
     function collapse(d) {
       if (d.children) {
         d._children = d.children;
@@ -126,19 +100,30 @@ const OsintTree = () => {
       }
     }
 
-    // Initially collapse ALL children of the root (Vision)
-    // so only the Vision node circle is visible when page loads
+    // collapse all children of root initially
     if (root.children) {
       root.children.forEach(collapse);
-      // Hide the children completely on initial load
       root._children = root.children;
       root.children = null;
     }
 
     const treeLayout = d3.tree().size([height, width]);
 
-    // Now call update with the collapsed tree
     update(root);
+
+    function linkPath(d) {
+      const s = d.source;
+      const t = d.target;
+      if (LINK_MODE === "straight") {
+        return `M${s.y},${s.x}L${t.y},${t.x}`;
+      }
+      // Curved with controllable tension
+      const dx = t.y - s.y;
+      const alpha = dx * CURVE_TENSION;
+      return `M${s.y},${s.x}C${s.y + alpha},${s.x} ${t.y - alpha},${t.x} ${
+        t.y
+      },${t.x}`;
+    }
 
     function update(source) {
       const duration = 750;
@@ -149,7 +134,7 @@ const OsintTree = () => {
 
       nodes.forEach((d) => (d.y = d.depth * nodeSpacing));
 
-      // Nodes
+      // NODES
       const node = g
         .selectAll("g.node")
         .data(nodes, (d) => d.id || (d.id = ++i));
@@ -167,9 +152,11 @@ const OsintTree = () => {
       nodeEnter
         .append("circle")
         .attr("r", 1e-6)
-        .style("fill", (d) => (d._children ? "#1e3a8a" : "#fff"));
+        .style("fill", (d) => (d._children ? "#1e3a8a" : "#fff"))
+        .style("stroke", "#1e293b")
+        .style("stroke-width", isMobile ? 0.8 : 1.2);
 
-      // Responsive text positioning and sizing
+      // text for URL nodes
       nodeEnter
         .filter((d) => d.data.type === "url")
         .append("a")
@@ -183,15 +170,11 @@ const OsintTree = () => {
         .attr("text-anchor", (d) =>
           d.children || d._children ? "end" : "start"
         )
-        .text((d) => {
-          const maxLength = isMobile ? 15 : 25;
-          return d.data.name.length > maxLength
-            ? d.data.name.substring(0, maxLength) + "..."
-            : d.data.name;
-        })
+        .text((d) => d.data.name)
         .style("fill-opacity", 1e-6)
-        .style("font-size", isMobile ? "10px" : "12px");
+        .style("font-size", isMobile ? "10px" : "18px");
 
+      // text for normal nodes
       nodeEnter
         .filter((d) => d.data.type !== "url")
         .append("text")
@@ -202,43 +185,11 @@ const OsintTree = () => {
         .attr("text-anchor", (d) =>
           d.children || d._children ? "end" : "start"
         )
-        .text((d) => {
-          const maxLength = isMobile ? 15 : 25;
-          return d.data.name.length > maxLength
-            ? d.data.name.substring(0, maxLength) + "..."
-            : d.data.name;
-        })
+        .text((d) => d.data.name)
         .style("fill-opacity", 1e-6)
-        .style("font-size", isMobile ? "10px" : "12px");
+        .style("font-size", isMobile ? "10px" : "18px");
 
-      // Add custom instant tooltips instead of title elements
-      nodeEnter
-        .on("mouseenter", function (event, d) {
-          // Remove any existing tooltip
-          d3.select("body").select(".custom-tooltip").remove();
-
-          // Create new tooltip
-          const tooltip = d3
-            .select("body")
-            .append("div")
-            .attr("class", "custom-tooltip")
-            .style("position", "absolute")
-            .style("background", "rgba(0, 0, 0, 0.8)")
-            .style("color", "white")
-            .style("padding", "8px")
-            .style("border-radius", "4px")
-            .style("font-size", "12px")
-            .style("pointer-events", "none")
-            .style("z-index", "1000")
-            .style("left", event.pageX + 10 + "px")
-            .style("top", event.pageY - 10 + "px")
-            .text(d.data.name);
-        })
-        .on("mouseleave", function () {
-          d3.select("body").select(".custom-tooltip").remove();
-        });
-
-      // Transition to new position
+      // update positions
       const nodeUpdate = node
         .merge(nodeEnter)
         .transition()
@@ -262,13 +213,8 @@ const OsintTree = () => {
       nodeExit.select("circle").attr("r", 1e-6);
       nodeExit.select("text").style("fill-opacity", 1e-6);
 
-      // Links
+      // LINKS
       const link = g.selectAll("path.link").data(links, (d) => d.target.id);
-
-      const diagonal = d3
-        .linkHorizontal()
-        .x((d) => d.y)
-        .y((d) => d.x);
 
       link
         .enter()
@@ -276,28 +222,29 @@ const OsintTree = () => {
         .attr("class", "link")
         .style("fill", "none")
         .style("stroke", (d) => {
-          // Color links based on target depth
           const targetDepth = d.target.depth;
           return levelColors[Math.min(targetDepth, levelColors.length - 1)];
         })
-        .style("stroke-width", "0.4px")
+        .style("stroke-width", isMobile ? "0.45px" : "0.7px")
         .attr("d", () => {
           const o = { x: source.x0, y: source.y0 };
-          return diagonal({ source: o, target: o });
+          return LINK_MODE === "straight"
+            ? `M${o.y},${o.x}L${o.y},${o.x}`
+            : `M${o.y},${o.x}C${o.y},${o.x} ${o.y},${o.x} ${o.y},${o.x}`;
         })
         .transition()
         .duration(duration)
-        .attr("d", diagonal);
+        .attr("d", linkPath);
 
       link
         .transition()
         .duration(duration)
-        .attr("d", diagonal)
+        .attr("d", linkPath)
         .style("stroke", (d) => {
-          // Update color on transition
           const targetDepth = d.target.depth;
           return levelColors[Math.min(targetDepth, levelColors.length - 1)];
-        });
+        })
+        .style("stroke-width", isMobile ? "1.25px" : "0.8px");
 
       link
         .exit()
@@ -305,11 +252,12 @@ const OsintTree = () => {
         .duration(duration)
         .attr("d", () => {
           const o = { x: source.x, y: source.y };
-          return diagonal({ source: o, target: o });
+          return LINK_MODE === "straight"
+            ? `M${o.y},${o.x}L${o.y},${o.x}`
+            : `M${o.y},${o.x}C${o.y},${o.x} ${o.y},${o.x} ${o.y},${o.x}`;
         })
         .remove();
 
-      // Save the current position for transitions
       nodes.forEach((d) => {
         d.x0 = d.x;
         d.y0 = d.y;
@@ -317,24 +265,15 @@ const OsintTree = () => {
     }
 
     function toggle(d) {
-      console.log("Toggle called for node:", d.data.name, "depth:", d.depth); // Debug line
       if (d.children) {
         d._children = d.children;
         d.children = null;
-        // Only hide vision statement when collapsing the root node (Vision)
         if (d.depth === 0) {
-          console.log("Hiding vision statement - root collapsed"); // Debug line
           setIsTreeExpanded(false);
         }
       } else {
         d.children = d._children;
         d._children = null;
-        // Do NOT hide vision statement when expanding the root node
-        // Vision statement should remain visible when tree is expanded
-        if (d.depth === 0) {
-          console.log("Root expanded but keeping vision statement visible"); // Debug line
-          // Remove this line: setIsTreeExpanded(true);
-        }
       }
     }
   }, [dimensions]);
@@ -342,17 +281,16 @@ const OsintTree = () => {
   return (
     <div style={{ width: "100%", height: "100%", position: "relative" }}>
       <svg ref={svgRef} style={{ width: "100%", height: "100%" }}></svg>
-      {/* Only show vision statement when root Vision node is not expanded */}
+
+      {/* Vision statement overlay */}
       {!isTreeExpanded && (
         <div
           style={{
             position: "absolute",
-            top: `${
-              dimensions.height / 2 + (dimensions.width < 768 ? 60 : -250)
-            }px`, // Keep -250 for desktop
-            left: `${dimensions.width < 768 ? 40 : 150}px`,
+            top: "30px",
+            left: "170px",
             transform: "translateX(-50%)",
-            maxWidth: dimensions.width < 768 ? "200px" : "220px",
+            width: "280px", // ✅ Fix width here
             backgroundColor: "#ffffff",
             border: "1px solid #e5e7eb",
             borderRadius: "8px",
@@ -365,7 +303,7 @@ const OsintTree = () => {
           <h4
             style={{
               margin: "0 0 8px 0",
-              fontSize: dimensions.width < 768 ? "11px" : "12px",
+              fontSize: dimensions.width < 768 ? "11px" : "20px",
               fontWeight: "600",
               color: "#e11d48",
               fontFamily:
@@ -377,7 +315,7 @@ const OsintTree = () => {
           <p
             style={{
               margin: "0",
-              fontSize: dimensions.width < 768 ? "10px" : "11px",
+              fontSize: dimensions.width < 768 ? "10px" : "18px",
               color: "#4b5563",
               lineHeight: "1.5",
               wordWrap: "break-word",

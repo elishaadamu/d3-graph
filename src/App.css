@@ -1,7 +1,8 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 10px;
+  width: 1850px;
 }
 
 /* Base styles */
@@ -118,7 +119,7 @@ path.link {
 }
 
 .footer-content {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 20px;
 }
