@@ -48,7 +48,7 @@ const OsintTree = () => {
     const height = dimensions.height - margin.top - margin.bottom;
 
     // horizontal spacing
-    const nodeSpacing = isMobile ? 180 : isTablet ? 260 : 380;
+    const nodeSpacing = isMobile ? 180 : isTablet ? 260 : 800;
 
     let i = 0;
 
@@ -142,6 +142,7 @@ const OsintTree = () => {
 
       const nodeEnter = node
         .enter()
+
         .append("g")
         .attr("class", "node")
         .attr("transform", (d) => `translate(${source.y0},${source.x0})`)
@@ -152,14 +153,18 @@ const OsintTree = () => {
 
       nodeEnter
         .append("circle")
-        .attr("r", 1e-6)
-        .style("fill", (d) => (d._children ? "#1e3a8a" : "#fff"))
-        .style("stroke", "#1e293b")
-        .style("stroke-width", isMobile ? 0.8 : 10);
+        .attr(
+          "cx",
+          (d) => (d.children || d._children ? 20 : -20) // push circle left/right
+        )
+        .attr("r", isMobile ? 6 : 8)
+        .style("stroke", (d) => (d._children ? "#1e3a8a" : "rgb(164 148 148)"))
+        .style("fill", "#1e293b")
+        .style("stroke-width", isMobile ? 0.8 : 20);
 
       // text for URL nodes
       nodeEnter
-        .filter((d) => d.data.type === "category")
+        .filter((d) => d.data.type === "url")
         .append("a")
         .attr("xlink:href", (d) => d.data.url)
         .attr("target", "_blank")
