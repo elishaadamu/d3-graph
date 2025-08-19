@@ -79,11 +79,12 @@ const OsintTree = () => {
         .append("text")
         .attr("class", "level-title")
         .attr("x", margin.left + index * nodeSpacing)
-        .attr("y", isMobile ? 30 : 20)
+        .attr("y", isMobile ? 30 : 50)
         .attr("text-anchor", "middle")
-        .style("font-size", isMobile ? "10px" : "14px")
+        .style("font-size", isMobile ? "10px" : "32px")
         .style("font-weight", "bold")
         .style("fill", levelColors[index])
+        .style("margin-top", "10px")
         .text(title);
     });
 
@@ -154,11 +155,11 @@ const OsintTree = () => {
         .attr("r", 1e-6)
         .style("fill", (d) => (d._children ? "#1e3a8a" : "#fff"))
         .style("stroke", "#1e293b")
-        .style("stroke-width", isMobile ? 0.8 : 1.2);
+        .style("stroke-width", isMobile ? 0.8 : 10);
 
       // text for URL nodes
       nodeEnter
-        .filter((d) => d.data.type === "url")
+        .filter((d) => d.data.type === "category")
         .append("a")
         .attr("xlink:href", (d) => d.data.url)
         .attr("target", "_blank")
@@ -172,7 +173,7 @@ const OsintTree = () => {
         )
         .text((d) => d.data.name)
         .style("fill-opacity", 1e-6)
-        .style("font-size", isMobile ? "10px" : "18px");
+        .style("font-size", isMobile ? "32px" : "32px");
 
       // text for normal nodes
       nodeEnter
@@ -187,7 +188,7 @@ const OsintTree = () => {
         )
         .text((d) => d.data.name)
         .style("fill-opacity", 1e-6)
-        .style("font-size", isMobile ? "10px" : "18px");
+        .style("font-size", isMobile ? "32px" : "32px");
 
       // update positions
       const nodeUpdate = node
@@ -288,9 +289,9 @@ const OsintTree = () => {
           style={{
             position: "absolute",
             top: "30px",
-            left: "170px",
+            right: "-210px",
             transform: "translateX(-50%)",
-            width: "280px", // ✅ Fix width here
+            width: "450px", // ✅ Fix width here
             backgroundColor: "#ffffff",
             border: "1px solid #e5e7eb",
             borderRadius: "8px",
@@ -303,7 +304,7 @@ const OsintTree = () => {
           <h4
             style={{
               margin: "0 0 8px 0",
-              fontSize: dimensions.width < 768 ? "11px" : "20px",
+              fontSize: dimensions.width < 768 ? "11px" : "32px",
               fontWeight: "600",
               color: "#e11d48",
               fontFamily:
@@ -315,7 +316,7 @@ const OsintTree = () => {
           <p
             style={{
               margin: "0",
-              fontSize: dimensions.width < 768 ? "10px" : "18px",
+              fontSize: dimensions.width < 768 ? "10px" : "30px",
               color: "#4b5563",
               lineHeight: "1.5",
               wordWrap: "break-word",
