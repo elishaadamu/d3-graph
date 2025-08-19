@@ -309,7 +309,7 @@ const OsintTree = () => {
           <h4
             style={{
               margin: "0 0 8px 0",
-              fontSize: dimensions.width < 768 ? "11px" : "32px",
+              fontSize: dimensions.width < 768 ? "11px" : "38px",
               fontWeight: "600",
               color: "#e11d48",
               fontFamily:
@@ -321,7 +321,7 @@ const OsintTree = () => {
           <p
             style={{
               margin: "0",
-              fontSize: dimensions.width < 768 ? "10px" : "30px",
+              fontSize: dimensions.width < 768 ? "10px" : "33px",
               color: "#4b5563",
               lineHeight: "1.5",
               wordWrap: "break-word",
