@@ -48,7 +48,7 @@ const OsintTree = () => {
     const height = dimensions.height - margin.top - margin.bottom;
 
     // horizontal spacing
-    const nodeSpacing = isMobile ? 180 : isTablet ? 260 : 800;
+    const nodeSpacing = isMobile ? 180 : isTablet ? 260 : 1000;
 
     let i = 0;
 
@@ -81,7 +81,7 @@ const OsintTree = () => {
         .attr("x", margin.left + index * nodeSpacing)
         .attr("y", isMobile ? 30 : 50)
         .attr("text-anchor", "middle")
-        .style("font-size", isMobile ? "10px" : "32px")
+        .style("font-size", isMobile ? "10px" : "40px")
         .style("font-weight", "bold")
         .style("fill", levelColors[index])
         .style("margin-top", "10px")
@@ -160,7 +160,7 @@ const OsintTree = () => {
         .attr("r", isMobile ? 6 : 8)
         .style("stroke", (d) => (d._children ? "#1e3a8a" : "rgb(164 148 148)"))
         .style("fill", "#1e293b")
-        .style("stroke-width", isMobile ? 0.8 : 20);
+        .style("stroke-width", isMobile ? 0.8 : 25);
 
       // text for URL nodes
       nodeEnter
