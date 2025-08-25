@@ -32,9 +32,19 @@ const OsintTree = () => {
   useEffect(() => {
     if (dimensions.width === 0) return;
 
-    // responsive flags
     const isMobile = dimensions.width < 768;
     const isTablet = dimensions.width >= 768 && dimensions.width < 1024;
+    const lgDesktop = dimensions.width >= 3840;
+    const vlgDesktop = dimensions.width >= 5120;
+
+    // ✅ Central font size function
+    const getFontSize = (type = "node") => {
+      if (isMobile) return type === "title" ? "10px" : "32px";
+      if (vlgDesktop) return type === "title" ? "64px" : "64px";
+      if (lgDesktop) return type === "title" ? "48px" : "48px";
+      if (isTablet) return type === "title" ? "28px" : "36px";
+      return type === "title" ? "40px" : "32px"; // default desktop
+    };
 
     // margins
     const margin = {
@@ -52,7 +62,7 @@ const OsintTree = () => {
 
     let i = 0;
 
-    // clear
+    // clear old svg
     d3.select(svgRef.current).selectAll("*").remove();
 
     const svg = d3
@@ -71,7 +81,7 @@ const OsintTree = () => {
       "Objectives",
       "Performance Measures",
     ];
-    const levelColors = ["#e11d48", "#059669", "#2563eb", "#7c3aed"];
+    const levelColors = ["#e11d48", "#059669", "#83a4ebff", "#965cf9ff"];
 
     const titleGroup = svg.append("g").attr("class", "level-titles");
     levelTitles.forEach((title, index) => {
@@ -81,10 +91,9 @@ const OsintTree = () => {
         .attr("x", margin.left + index * nodeSpacing)
         .attr("y", isMobile ? 30 : 50)
         .attr("text-anchor", "middle")
-        .style("font-size", isMobile ? "10px" : "40px")
+        .style("font-size", getFontSize("title"))
         .style("font-weight", "bold")
         .style("fill", levelColors[index])
-        .style("margin-top", "10px")
         .text(title);
     });
 
@@ -101,7 +110,6 @@ const OsintTree = () => {
       }
     }
 
-    // collapse all children of root initially
     if (root.children) {
       root.children.forEach(collapse);
       root._children = root.children;
@@ -118,7 +126,6 @@ const OsintTree = () => {
       if (LINK_MODE === "straight") {
         return `M${s.y},${s.x}L${t.y},${t.x}`;
       }
-      // Curved with controllable tension
       const dx = t.y - s.y;
       const alpha = dx * CURVE_TENSION;
       return `M${s.y},${s.x}C${s.y + alpha},${s.x} ${t.y - alpha},${t.x} ${
@@ -142,7 +149,6 @@ const OsintTree = () => {
 
       const nodeEnter = node
         .enter()
-
         .append("g")
         .attr("class", "node")
         .attr("transform", (d) => `translate(${source.y0},${source.x0})`)
@@ -151,49 +157,32 @@ const OsintTree = () => {
           update(d);
         });
 
+      // ✅ Circle centered at (0,0)
       nodeEnter
         .append("circle")
-        .attr(
-          "cx",
-          (d) => (d.children || d._children ? 20 : -20) // push circle left/right
-        )
         .attr("r", isMobile ? 6 : 8)
         .style("stroke", (d) => (d._children ? "#1e3a8a" : "rgb(164 148 148)"))
         .style("fill", "#1e293b")
-        .style("stroke-width", isMobile ? 0.8 : 25);
+        .style("stroke-width", isMobile ? 0.8 : 2);
 
-      // text for URL nodes
-      nodeEnter
-        .filter((d) => d.data.type === "url")
-        .append("a")
-        .attr("xlink:href", (d) => d.data.url)
-        .attr("target", "_blank")
-        .append("text")
-        .attr("dy", ".35em")
-        .attr("x", (d) =>
-          d.children || d._children ? (isMobile ? -8 : -13) : isMobile ? 8 : 13
-        )
-        .attr("text-anchor", (d) =>
-          d.children || d._children ? "end" : "start"
-        )
-        .text((d) => d.data.name)
-        .style("fill-opacity", 1e-6)
-        .style("font-size", isMobile ? "32px" : "32px");
-
-      // text for normal nodes
+      // ✅ Text aligned relative to circle
       nodeEnter
         .filter((d) => d.data.type !== "url")
-        .append("text")
-        .attr("dy", ".35em")
-        .attr("x", (d) =>
-          d.children || d._children ? (isMobile ? -8 : -13) : isMobile ? 8 : 13
-        )
-        .attr("text-anchor", (d) =>
-          d.children || d._children ? "end" : "start"
-        )
-        .text((d) => d.data.name)
-        .style("fill-opacity", 1e-6)
-        .style("font-size", isMobile ? "32px" : "32px");
+        .append("foreignObject")
+        .attr("x", isMobile ? 15 : 20)
+        .attr("y", -20)
+        .attr("width", 500)
+        .attr("height", 1000)
+        .append("xhtml:div")
+        .style("display", "inline-block")
+        .style("max-width", "500px")
+        .style("height", "auto")
+        .style("font-size", getFontSize("node"))
+        .style("color", "#000")
+        .style("line-height", "1.3")
+        .style("word-wrap", "break-word")
+        .style("overflow-wrap", "break-word")
+        .text((d) => d.data.name);
 
       // update positions
       const nodeUpdate = node
@@ -202,12 +191,7 @@ const OsintTree = () => {
         .duration(duration)
         .attr("transform", (d) => `translate(${d.y},${d.x})`);
 
-      nodeUpdate
-        .select("circle")
-        .attr("r", isMobile ? 4 : 6)
-        .style("fill", (d) => (d._children ? "#1e3a8a" : "#fff"));
-
-      nodeUpdate.select("text").style("fill-opacity", 1);
+      nodeUpdate.select("circle").attr("r", isMobile ? 12 : 12);
 
       const nodeExit = node
         .exit()
@@ -217,7 +201,6 @@ const OsintTree = () => {
         .remove();
 
       nodeExit.select("circle").attr("r", 1e-6);
-      nodeExit.select("text").style("fill-opacity", 1e-6);
 
       // LINKS
       const link = g.selectAll("path.link").data(links, (d) => d.target.id);
@@ -293,10 +276,10 @@ const OsintTree = () => {
         <div
           style={{
             position: "absolute",
-            top: "30px",
-            right: "-210px",
+            top: "80px",
+            left: "250px",
             transform: "translateX(-50%)",
-            width: "450px", // ✅ Fix width here
+            width: "450px",
             backgroundColor: "#ffffff",
             border: "1px solid #e5e7eb",
             borderRadius: "8px",
@@ -312,8 +295,6 @@ const OsintTree = () => {
               fontSize: dimensions.width < 768 ? "11px" : "38px",
               fontWeight: "600",
               color: "#e11d48",
-              fontFamily:
-                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
             }}
           >
             🎯 Vision Statement
@@ -327,9 +308,6 @@ const OsintTree = () => {
               wordWrap: "break-word",
               overflowWrap: "break-word",
               hyphens: "auto",
-              fontFamily:
-                "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-              letterSpacing: "0.025em",
             }}
           >
             An integrated network, cost effective, multimodal transportation
