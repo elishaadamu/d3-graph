@@ -161,8 +161,18 @@ const OsintTree = () => {
       nodeEnter
         .append("circle")
         .attr("r", isMobile ? 6 : 8)
-        .style("stroke", (d) => (d._children ? "#1e3a8a" : "rgb(164 148 148)"))
-        .style("fill", "#1e293b")
+        .style("stroke", (d) => {
+          if (!d.children && !d._children) {
+            return "#1e3a8a"; // blue border for leaf nodes
+          }
+          return d._children ? "#1e3a8a" : "rgb(164 148 148)";
+        })
+        .style("fill", (d) => {
+          if (!d.children && !d._children) {
+            return "#ffffff"; // white background for leaf nodes
+          }
+          return "#1e293b"; // dark fill for others
+        })
         .style("stroke-width", isMobile ? 0.8 : 2);
 
       // ✅ Text aligned relative to circle
